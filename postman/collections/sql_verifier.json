@@ -1,0 +1,1441 @@
+{
+	"info": {
+		"_postman_id": "bad833a6-b2d2-4325-a998-2c3631829e35",
+		"name": "sql_verifier",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "20439790-bad833a6-b2d2-4325-a998-2c3631829e35"
+	},
+	"item": [
+		{
+			"name": "Lesson 4.1",
+			"item": [
+				{
+					"name": "Registration",
+					"item": [
+						{
+							"name": "Registration a new student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The response has a header server with value Cowboy\", function () {",
+											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"id": "93c089b7-aa62-4868-b195-1a8ab1ac09e5"
+									}
+								}
+							],
+							"id": "b178c132-1940-43b0-8f9f-b313bf8b0c87",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registration a new teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The response has a header server with value Cowboy\", function () {",
+											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "a9984f91-5b2a-4fe5-a4f3-342773c214db"
+									}
+								}
+							],
+							"id": "6c95c666-c69f-4daa-b9b0-9653cc53b700",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_TEACHER\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registration a new admin is prohibited",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The response has a header server with value Cowboy\", function () {",
+											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "c67e3e83-7f82-4724-9a14-51ff8045bee1"
+									}
+								}
+							],
+							"id": "74a25e36-5331-456c-b748-5f391a764f72",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"{2023-11-16T19:34:20.909Z}\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registration a new user without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The JSON has a detail key with additional info\", function () {",
+											"    pm.expect(pm.response.json().detail).to.eql(\"Failed to read request\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "0f0c56fb-2f30-4ad7-b91b-cf42ebd0cd89"
+									}
+								}
+							],
+							"id": "fb3d2cd2-7a39-4f9d-910d-b5f0cdf77f14",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"{2023-11-16T19:34:20.909Z}\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registration with empty login value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The JSON has a title key with additional info\", function () {",
+											"    pm.expect(pm.response.json().title).to.eql(\"Method argument not valid\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"id": "0c0bd72a-2b04-42ad-a458-630cbd2b3b21"
+									}
+								}
+							],
+							"id": "1085330b-845b-474e-a270-4ad177f813ab",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"ru\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registration a new user with numbers in the firstname value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The JSON has a detail key with additional info\", function () {",
+											"    pm.expect(pm.response.json().detail).to.eql(\"Failed to read request\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"id": "0fb1b081-50e0-416a-ac95-f8666a14b9bf"
+									}
+								}
+							],
+							"id": "3f0ff62e-d53c-43dc-89e5-5be0014934a4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": {{$randomInt}},\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"{2023-11-16T19:34:20.909Z}\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "443bc924-be54-460c-a691-4b3e7199a0b6"
+				},
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Authentication of the student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The id token is available in the body\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "8c32a014-f4af-4121-8166-2f0347320467"
+									}
+								}
+							],
+							"id": "1918c3c5-f923-4f7d-acaf-dac83402abf7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{studentUserName}}\",\n\"password\": \"{{studentPassword}}\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/authenticate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication of the teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The id token is available in the body\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "3d0ff3a8-0358-405c-82be-1dd69160800a"
+									}
+								}
+							],
+							"id": "df711769-70b7-463d-a784-ee7d0569551f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{teacherUserName}}\",\n\"password\": \"{{teacherPassword}}\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/authenticate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication of the admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The id token is available in the body\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "1be557d8-3da3-489c-91ca-28b3c6a25ded"
+									}
+								}
+							],
+							"id": "2b0e128d-5e20-44f1-b684-cd84587ce184",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{adminUserName}}\",\n\"password\": \"{{adminPassword}}\",\n\"rememberMe\": true\n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/authenticate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication with invalid username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401 Unathorized\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The JSON has a detail key with additional info\", function () {",
+											"    pm.expect(pm.response.json().detail).to.eql(\"Bad credentials\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "2a862d45-eb84-4b77-af39-3095940eaa9f"
+									}
+								}
+							],
+							"id": "dda288ce-35c1-4a40-b204-115a34a792fe",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"123\",\n\"password\": \"{{studentPassword}}\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/authenticate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication  with invalid password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The JSON has a title key with additional info\", function () {",
+											"    pm.expect(pm.response.json().title).to.eql(\"Method argument not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "96ad2650-32b8-4cce-b40e-9ccbd094658a"
+									}
+								}
+							],
+							"id": "1ae9f075-4c82-4e7e-8481-b94cda04b603",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{teacherUserName}}\",\n\"password\": \"\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/authenticate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication with non-activated user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500 Internal Server Error\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"The JSON has a detail key with username value\", function () {",
+											"    pm.expect(pm.response.json().detail).to.eql(\"User driver was not activated\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "3e2155b7-2c39-4ffd-ae86-f07fd6d8f51a"
+									}
+								}
+							],
+							"id": "554dcf35-7a59-484c-87e3-6d410355c832",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{nonActiveUserName}}\",\n\"password\": \"{{nonActivePassword}}\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/authenticate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "add469d7-6ff1-43ea-9068-32a5ed35c109"
+				}
+			],
+			"id": "fac332b8-27d1-4877-a1cd-cc6acfbb7fd8"
+		},
+		{
+			"name": "Lesson 4.2.1",
+			"item": [
+				{
+					"name": "Tasks",
+					"item": [
+						{
+							"name": "Get a lisf of tasks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"const task = pm.response.json()",
+											"",
+											"pm.environment.set(\"taskID\", task[0].id);"
+										],
+										"type": "text/javascript",
+										"id": "3a205c15-4258-4a55-a122-26bb5e5e5d56"
+									}
+								}
+							],
+							"id": "c3728d02-5e5a-4abf-beb4-838ddc226601",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get an info about task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "872a1a2e-1238-4069-8f84-2ca1f67a2c0f"
+									}
+								}
+							],
+							"id": "05be435d-c4b8-4fa4-bb6b-a5bc6f71f075",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "ea2d7462-75db-4d7f-aab5-4b48842ff230"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"createdTaskID\", _.random(00000,99999));"
+										],
+										"type": "text/javascript",
+										"id": "b2a6acee-8746-4722-82a9-2801cee4ee16"
+									}
+								}
+							],
+							"id": "af81f912-7465-487d-89fa-4396ace0632c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{createdTaskID}},\n  \"text\": \"{{$randomWords}}\",\n  \"answer\": \"{{$randomWords}}\",\n  \"title\": \"{{$randomWords}}\"\n}  \n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Task without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "6f82fc2d-e3ac-4344-842a-dab8b0d93333"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"id": "745346b6-1299-4824-9b9a-52151fb3264e"
+									}
+								}
+							],
+							"id": "3965a683-cd4b-4d15-b531-af2afddae8af",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "44d4809d-dba3-4853-bf53-8061d7defe92"
+									}
+								}
+							],
+							"id": "1e502d44-2136-4953-bb34-c8809ee82125",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"text\": \"{{$randomWords}}\",\n  \"answer\": \"{{$randomWords}}\",\n  \"title\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a text of Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", () => {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"id": "295c0bd0-006d-468a-8401-aefd04a098ad"
+									}
+								}
+							],
+							"id": "67d02e60-9866-4a4d-9005-abe878defa5a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"text\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Task without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"id": "61801124-ad9e-453d-81e2-3c7f33edeae5"
+									}
+								}
+							],
+							"id": "d5006018-14a3-4489-8a0c-f61a36b27c6e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a text of task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "4443cc1e-ef39-4b73-b13b-b0b7ff953fd5"
+									}
+								}
+							],
+							"id": "3137bee2-441a-4cfc-877c-b7f14211f7db",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"text\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update an answer of task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "79e6e45c-ad45-4d09-ae9c-7100c1a40316"
+									}
+								}
+							],
+							"id": "d8908915-4cf7-4596-beec-d70cb0d880e8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"answer\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a title of task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "923957b4-9902-496c-b76c-70e9aa3e732b"
+									}
+								}
+							],
+							"id": "23950d34-41c1-4976-bedf-6acd8d89dc27",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"title\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a task without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 415\", () => {",
+											"    pm.response.to.have.status(415);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"id": "9074fa0d-45c7-4027-8259-e5497a2ceb3d"
+									}
+								}
+							],
+							"id": "55a419ed-d898-4688-b1a4-8b29f8905781",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response Time is below than 500 ms\", () => {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "d1c397b8-6620-41e9-a869-e8a26e9e674b"
+									}
+								}
+							],
+							"id": "ae31118c-c065-4a4f-84e2-81b4bffe25cc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/tasks//{{taskID}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "2731dcb3-84cd-49cd-a519-8258dd8f5675",
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{accessToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "98162cd0-c426-4518-88a5-830312776514"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "6e0f4069-76f2-4b3d-8cb3-bc9047171989"
+							}
+						}
+					]
+				}
+			],
+			"id": "683ce940-ae0e-45b4-afad-ac7f440448e2"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "729929f2-da16-4fb8-b63e-07410f4f9f22",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2b17b984-6cc7-4091-a50e-7a24af49bd32",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ab1c9cbd-51d1-41d4-a3a9-28f5f5fb7b14",
+			"key": "baseURL",
+			"value": "https://sqlverifier-50d286d70656.herokuapp.com",
+			"type": "string"
+		},
+		{
+			"id": "bfcbeda9-efdd-48d3-b60f-176b28dc943c",
+			"key": "studentUserName",
+			"value": "panel",
+			"type": "string"
+		},
+		{
+			"id": "3e6e3fe1-2d71-46d4-86f4-64663ddb47d3",
+			"key": "studentPassword",
+			"value": "123456",
+			"type": "string"
+		},
+		{
+			"id": "0af2a409-c69e-4864-9d98-7e20cf1ae3c6",
+			"key": "teacherUserName",
+			"value": "card",
+			"type": "string"
+		},
+		{
+			"id": "bae16cda-9c71-406f-8827-7eaf6d96b867",
+			"key": "teacherPassword",
+			"value": "123456",
+			"type": "string"
+		},
+		{
+			"id": "6d03ad17-2e52-4e3d-b4e1-c382c0e96a6b",
+			"key": "adminUserName",
+			"value": "protocol",
+			"type": "string"
+		},
+		{
+			"id": "2bc27b04-9b6b-4de2-bbdd-842f7544c1ab",
+			"key": "adminPassword",
+			"value": "123456",
+			"type": "string"
+		},
+		{
+			"id": "0dddf5fe-5a62-4cf1-9366-d9cb07e25281",
+			"key": "nonActiveUserName",
+			"value": "driver",
+			"type": "string"
+		},
+		{
+			"id": "52d12782-4213-4c8b-8b91-f96c07d4f169",
+			"key": "nonActivePassword",
+			"value": "123456",
+			"type": "string"
+		},
+		{
+			"id": "d3cc9630-733e-4af9-8fbb-ccde0222dee3",
+			"key": "admin",
+			"value": "admin",
+			"type": "string"
+		}
+	]
+}

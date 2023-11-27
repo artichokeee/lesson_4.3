@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "bad833a6-b2d2-4325-a998-2c3631829e35",
+		"_postman_id": "696c353a-00ca-4574-a3d2-88ee9d0188dc",
 		"name": "sql_verifier",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "20439790-bad833a6-b2d2-4325-a998-2c3631829e35"
+		"_uid": "20439790-696c353a-00ca-4574-a3d2-88ee9d0188dc"
 	},
 	"item": [
 		{
@@ -23,22 +23,31 @@
 											"    pm.response.to.have.status(201);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The response has a header server with value Cowboy\", function () {",
 											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
 											"});",
 											"",
+											"const student = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.environment.set(\"newStudenLogin\", student.login);",
 											""
 										],
 										"type": "text/javascript",
-										"id": "93c089b7-aa62-4868-b195-1a8ab1ac09e5"
+										"id": "06413c49-39df-454f-b233-0b1f565facc6"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"id": "965831e4-456b-465e-bb44-3efacf561f7d"
 									}
 								}
 							],
-							"id": "b178c132-1940-43b0-8f9f-b313bf8b0c87",
+							"id": "fe895ac3-8181-4537-b8f5-eb3df1c1cf40",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -68,6 +77,69 @@
 							"response": []
 						},
 						{
+							"name": "Check an authority of a new student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"The body has a ROLE_USER_STUDENT authority\", function () {",
+											"    pm.expect(pm.response.json().authorities).to.eql([\"ROLE_USER_STUDENT\"]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"id": "0a981d00-794d-4c3a-9bef-960c7fea0add"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"id": "0b48bad2-94d7-4e71-b0dc-eaa95bfb0d18"
+									}
+								}
+							],
+							"id": "643441ec-5941-4df1-8ec3-a4ecf4c8d7b8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/admin/users/{{newStudenLogin}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{newStudenLogin}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Registration a new teacher",
 							"event": [
 								{
@@ -78,20 +150,20 @@
 											"    pm.response.to.have.status(201);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The response has a header server with value Cowboy\", function () {",
 											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
-											"});"
+											"});",
+											"",
+											"const teacher = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.environment.set(\"newTeacherLogin\", teacher.login);"
 										],
 										"type": "text/javascript",
-										"id": "a9984f91-5b2a-4fe5-a4f3-342773c214db"
+										"id": "ec862d4f-8ba4-40a1-843e-79efaebf77c5"
 									}
 								}
 							],
-							"id": "6c95c666-c69f-4daa-b9b0-9653cc53b700",
+							"id": "ad4e8b96-7e05-4645-b71a-4650c9418c2c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -121,6 +193,69 @@
 							"response": []
 						},
 						{
+							"name": "Check an authority of a new teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"The body has a ROLE_USER_TEACHER authority\", function () {",
+											"    pm.expect(pm.response.json().authorities).to.eql([\"ROLE_USER_TEACHER\"]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"id": "9ffe8a18-cc3d-4029-bea1-5187edb445bf"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"id": "ac2d41c2-6764-4ea0-b264-ce4eb4b1f7c2"
+									}
+								}
+							],
+							"id": "3e598dc1-7e13-4c7d-83df-02ae04084200",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/admin/users/{{newTeacherLogin}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{newTeacherLogin}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Registration a new admin is prohibited",
 							"event": [
 								{
@@ -131,20 +266,16 @@
 											"    pm.response.to.have.status(400);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The response has a header server with value Cowboy\", function () {",
 											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "c67e3e83-7f82-4724-9a14-51ff8045bee1"
+										"id": "e7885610-8602-4cf5-b4eb-0d7ad8cdc7da"
 									}
 								}
 							],
-							"id": "74a25e36-5331-456c-b748-5f391a764f72",
+							"id": "79358048-a88d-4882-a962-aee92b46851f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -184,35 +315,22 @@
 											"    pm.response.to.have.status(400);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The JSON has a detail key with additional info\", function () {",
 											"    pm.expect(pm.response.json().detail).to.eql(\"Failed to read request\");",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "0f0c56fb-2f30-4ad7-b91b-cf42ebd0cd89"
+										"id": "9ea4a028-3e98-4aed-b249-2436adcead75"
 									}
 								}
 							],
-							"id": "fb3d2cd2-7a39-4f9d-910d-b5f0cdf77f14",
+							"id": "54b716a4-09b8-45dd-93ef-30defb928569",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"{2023-11-16T19:34:20.909Z}\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{baseURL}}/api/register",
 									"host": [
@@ -237,21 +355,17 @@
 											"    pm.response.to.have.status(400);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The JSON has a title key with additional info\", function () {",
 											"    pm.expect(pm.response.json().title).to.eql(\"Method argument not valid\");",
 											"});",
 											""
 										],
 										"type": "text/javascript",
-										"id": "0c0bd72a-2b04-42ad-a458-630cbd2b3b21"
+										"id": "5aa02102-a454-4ee0-a024-b3dc442e43ee"
 									}
 								}
 							],
-							"id": "1085330b-845b-474e-a270-4ad177f813ab",
+							"id": "237dba93-b4d8-4985-ac8d-389aa65ff6e7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -291,21 +405,17 @@
 											"    pm.response.to.have.status(400);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The JSON has a detail key with additional info\", function () {",
 											"    pm.expect(pm.response.json().detail).to.eql(\"Failed to read request\");",
 											"});",
 											""
 										],
 										"type": "text/javascript",
-										"id": "0fb1b081-50e0-416a-ac95-f8666a14b9bf"
+										"id": "08d889f5-a3ca-45e3-b153-a9e70a870976"
 									}
 								}
 							],
-							"id": "3f0ff62e-d53c-43dc-89e5-5be0014934a4",
+							"id": "1e2367c4-2bf5-4004-a0b2-51739a841e4c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -335,7 +445,7 @@
 							"response": []
 						}
 					],
-					"id": "443bc924-be54-460c-a691-4b3e7199a0b6"
+					"id": "546266f9-62c6-473c-ad0d-bd1d10be7630"
 				},
 				{
 					"name": "Authentication",
@@ -351,20 +461,16 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The id token is available in the body\", function () {",
 											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "8c32a014-f4af-4121-8166-2f0347320467"
+										"id": "d2fe37f6-505a-458f-94bd-0386fb6f6cba"
 									}
 								}
 							],
-							"id": "1918c3c5-f923-4f7d-acaf-dac83402abf7",
+							"id": "c3e9fa18-1bfe-4abe-8104-cd5031b086de",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -404,20 +510,16 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The id token is available in the body\", function () {",
 											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "3d0ff3a8-0358-405c-82be-1dd69160800a"
+										"id": "d389a3ea-b625-4487-ac94-14e09397d000"
 									}
 								}
 							],
-							"id": "df711769-70b7-463d-a784-ee7d0569551f",
+							"id": "91208b96-05c4-4050-8ec1-6e5e48687e43",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -457,20 +559,16 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The id token is available in the body\", function () {",
 											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "1be557d8-3da3-489c-91ca-28b3c6a25ded"
+										"id": "261ff6a5-42b6-40be-8448-b49af2073a97"
 									}
 								}
 							],
-							"id": "2b0e128d-5e20-44f1-b684-cd84587ce184",
+							"id": "c84f19c1-4142-4e27-93c9-7d29430eeeeb",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -510,20 +608,16 @@
 											"    pm.response.to.have.status(401);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The JSON has a detail key with additional info\", function () {",
 											"    pm.expect(pm.response.json().detail).to.eql(\"Bad credentials\");",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "2a862d45-eb84-4b77-af39-3095940eaa9f"
+										"id": "9226bcd5-c0be-41d2-b4d3-4f751ab82d26"
 									}
 								}
 							],
-							"id": "dda288ce-35c1-4a40-b204-115a34a792fe",
+							"id": "afcb3196-53d1-435d-ae9d-293fcf3aaf7a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -563,20 +657,16 @@
 											"    pm.response.to.have.status(400);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"The JSON has a title key with additional info\", function () {",
 											"    pm.expect(pm.response.json().title).to.eql(\"Method argument not valid\");",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "96ad2650-32b8-4cce-b40e-9ccbd094658a"
+										"id": "81f25756-a520-486e-b5a7-94427467c306"
 									}
 								}
 							],
-							"id": "1ae9f075-4c82-4e7e-8481-b94cda04b603",
+							"id": "d31b992d-6444-43f0-ac58-c110dc2f92b5",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -606,6 +696,70 @@
 							"response": []
 						},
 						{
+							"name": "Registration a new non-activated user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"The response has a header server with value Cowboy\", function () {",
+											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
+											"});",
+											"",
+											"const nonActiveUser = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.environment.set(\"nonActiveUserName\", nonActiveUser.login);",
+											""
+										],
+										"type": "text/javascript",
+										"id": "baf1af57-c6c8-4d35-82d4-6235ee58a113"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"id": "b171a9f8-8fdb-49e6-951b-5aac69272eef"
+									}
+								}
+							],
+							"id": "2540e789-8ae6-4ae0-9685-e5591fde7fe1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Authentication with non-activated user",
 							"event": [
 								{
@@ -616,20 +770,20 @@
 											"    pm.response.to.have.status(500);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
+											"const user = JSON.parse(pm.request.body.raw);",
+											"",
+											"console.log(user.username)",
 											"",
 											"pm.test(\"The JSON has a detail key with username value\", function () {",
-											"    pm.expect(pm.response.json().detail).to.eql(\"User driver was not activated\");",
+											"    pm.expect(pm.response.json().detail).to.eql(`User ${user.username} was not activated`);",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "3e2155b7-2c39-4ffd-ae86-f07fd6d8f51a"
+										"id": "87340936-bc31-4ce9-9b56-32fc1ea7dc13"
 									}
 								}
 							],
-							"id": "554dcf35-7a59-484c-87e3-6d410355c832",
+							"id": "701510d5-6997-4639-995a-1b176e52742c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -659,10 +813,10 @@
 							"response": []
 						}
 					],
-					"id": "add469d7-6ff1-43ea-9068-32a5ed35c109"
+					"id": "f0fcf32c-103f-417e-85e6-1faf09a568bb"
 				}
 			],
-			"id": "fac332b8-27d1-4877-a1cd-cc6acfbb7fd8"
+			"id": "05fc28c5-a1d1-4a62-90bb-a2fc48c15439"
 		},
 		{
 			"name": "Lesson 4.2.1",
@@ -681,20 +835,16 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"const task = pm.response.json()",
 											"",
 											"pm.environment.set(\"taskID\", task[0].id);"
 										],
 										"type": "text/javascript",
-										"id": "3a205c15-4258-4a55-a122-26bb5e5e5d56"
+										"id": "933f2918-7ddc-47c2-9e2e-ffc1675fd999"
 									}
 								}
 							],
-							"id": "c3728d02-5e5a-4abf-beb4-838ddc226601",
+							"id": "6d9e7062-48cf-4cbd-9368-624bd6482a40",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -725,10 +875,6 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"Verify that all values are correct \", () => {",
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData.id).that.is.a('number');",
@@ -738,11 +884,11 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "872a1a2e-1238-4069-8f84-2ca1f67a2c0f"
+										"id": "825ac72c-d585-4b05-a7aa-786a2fb227c4"
 									}
 								}
 							],
-							"id": "05be435d-c4b8-4fa4-bb6b-a5bc6f71f075",
+							"id": "350a7dcd-358b-4bf3-8e61-6aa5bb91f82f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -774,10 +920,6 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"",
 											"pm.test(\"Verify that all values are correct \", () => {",
 											"    const jsonData = pm.response.json();",
@@ -788,7 +930,7 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "ea2d7462-75db-4d7f-aab5-4b48842ff230"
+										"id": "91b239e0-ab5d-45f5-a08f-10c483c7c44e"
 									}
 								},
 								{
@@ -798,25 +940,15 @@
 											"pm.variables.set(\"createdTaskID\", _.random(00000,99999));"
 										],
 										"type": "text/javascript",
-										"id": "b2a6acee-8746-4722-82a9-2801cee4ee16"
+										"id": "f972f6fe-bdda-4f41-b9ac-cce7a0a87309"
 									}
 								}
 							],
-							"id": "af81f912-7465-487d-89fa-4396ace0632c",
+							"id": "d2c8a706-a335-4696-b1aa-4a952fb169ec",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{accessToken}}",
-											"type": "string"
-										}
-									]
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -853,7 +985,7 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "6f82fc2d-e3ac-4344-842a-dab8b0d93333"
+										"id": "583aa8c6-8025-4683-98c1-1eeb48f83d86"
 									}
 								},
 								{
@@ -863,25 +995,15 @@
 											""
 										],
 										"type": "text/javascript",
-										"id": "745346b6-1299-4824-9b9a-52151fb3264e"
+										"id": "fb73d918-f149-47ec-bff2-52d5729927bd"
 									}
 								}
 							],
-							"id": "3965a683-cd4b-4d15-b531-af2afddae8af",
+							"id": "9d1d958f-2354-4fa6-aded-8548f23df80e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{accessToken}}",
-											"type": "string"
-										}
-									]
-								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -908,10 +1030,6 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"Verify that all values are correct \", () => {",
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData.id).that.is.a('number');",
@@ -921,11 +1039,11 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "44d4809d-dba3-4853-bf53-8061d7defe92"
+										"id": "0c7af84c-b326-4bee-8548-0941c268676f"
 									}
 								}
 							],
-							"id": "1e502d44-2136-4953-bb34-c8809ee82125",
+							"id": "fe4b8cc1-eba4-47f7-a041-1381de84ece8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -964,19 +1082,14 @@
 										"exec": [
 											"pm.test(\"Status code is 500\", () => {",
 											"    pm.response.to.have.status(500);",
-											"});",
-											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											""
+											"});"
 										],
 										"type": "text/javascript",
-										"id": "295c0bd0-006d-468a-8401-aefd04a098ad"
+										"id": "24c3a8c6-0c3b-43eb-9b26-efdcc672a702"
 									}
 								}
 							],
-							"id": "67d02e60-9866-4a4d-9005-abe878defa5a",
+							"id": "c08031d7-24ad-46ed-9623-359b13c5ccd9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1015,19 +1128,14 @@
 										"exec": [
 											"pm.test(\"Status code is 400\", () => {",
 											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											""
+											"});"
 										],
 										"type": "text/javascript",
-										"id": "61801124-ad9e-453d-81e2-3c7f33edeae5"
+										"id": "6b1a36af-24d3-4754-ba75-bbb9b1d0a65a"
 									}
 								}
 							],
-							"id": "d5006018-14a3-4489-8a0c-f61a36b27c6e",
+							"id": "879d8a73-0210-4e84-979d-aa6e6677a76b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1059,10 +1167,6 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"Verify that all values are correct \", () => {",
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData.id).that.is.a('number');",
@@ -1072,11 +1176,11 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "4443cc1e-ef39-4b73-b13b-b0b7ff953fd5"
+										"id": "fbe78d98-e2e6-46ad-a821-c91af28c61f3"
 									}
 								}
 							],
-							"id": "3137bee2-441a-4cfc-877c-b7f14211f7db",
+							"id": "4b11ec06-9712-4a00-8b4b-ab831af3227f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1117,10 +1221,6 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"Verify that all values are correct \", () => {",
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData.id).that.is.a('number');",
@@ -1130,11 +1230,11 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "79e6e45c-ad45-4d09-ae9c-7100c1a40316"
+										"id": "92dcd572-897d-4a01-9f98-f82d1be5c929"
 									}
 								}
 							],
-							"id": "d8908915-4cf7-4596-beec-d70cb0d880e8",
+							"id": "a7d07a75-7720-488f-9bbc-804ce39bf3a1",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1175,10 +1275,6 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
-											"",
 											"pm.test(\"Verify that all values are correct \", () => {",
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData.id).that.is.a('number');",
@@ -1188,11 +1284,11 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "923957b4-9902-496c-b76c-70e9aa3e732b"
+										"id": "3746cbb4-8159-4129-afe3-7095b5902757"
 									}
 								}
 							],
-							"id": "23950d34-41c1-4976-bedf-6acd8d89dc27",
+							"id": "61f8f934-f89a-4e79-b235-cd152f31c2ec",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1232,18 +1328,14 @@
 											"pm.test(\"Status code is 415\", () => {",
 											"    pm.response.to.have.status(415);",
 											"});",
-											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
-											"});",
 											""
 										],
 										"type": "text/javascript",
-										"id": "9074fa0d-45c7-4027-8259-e5497a2ceb3d"
+										"id": "0415481c-b4ed-4770-8369-0d40c1417f5a"
 									}
 								}
 							],
-							"id": "55a419ed-d898-4688-b1a4-8b29f8905781",
+							"id": "f6a4b8cb-0a54-4a2d-a55b-6b4eb17980c8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1282,18 +1374,14 @@
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Response Time is below than 500 ms\", () => {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500); ",
 											"});"
 										],
 										"type": "text/javascript",
-										"id": "d1c397b8-6620-41e9-a869-e8a26e9e674b"
+										"id": "c6edebf1-e0ad-4e29-9035-a044fd274f94"
 									}
 								}
 							],
-							"id": "ae31118c-c065-4a4f-84e2-81b4bffe25cc",
+							"id": "f004a91c-c11e-43d9-861f-099c2c03eca1",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1316,7 +1404,7 @@
 							"response": []
 						}
 					],
-					"id": "2731dcb3-84cd-49cd-a519-8258dd8f5675",
+					"id": "d0dd8c6f-f8fe-4ddb-9a30-9b9039551d0c",
 					"auth": {
 						"type": "bearer",
 						"bearer": [
@@ -1335,7 +1423,7 @@
 								"exec": [
 									""
 								],
-								"id": "98162cd0-c426-4518-88a5-830312776514"
+								"id": "a60cc1a9-64f1-4f60-8607-5117cc680505"
 							}
 						},
 						{
@@ -1345,94 +1433,104 @@
 								"exec": [
 									""
 								],
-								"id": "6e0f4069-76f2-4b3d-8cb3-bc9047171989"
+								"id": "73529321-22d9-40bd-a01f-bb6764f16c7d"
 							}
 						}
 					]
 				}
 			],
-			"id": "683ce940-ae0e-45b4-afad-ac7f440448e2"
+			"id": "16405c3b-8e63-4feb-a82a-c438b988ccf5"
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "729929f2-da16-4fb8-b63e-07410f4f9f22",
 				"type": "text/javascript",
 				"exec": [
 					""
-				]
+				],
+				"id": "13892283-be26-49f4-aa8f-8ad028afefc4"
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "2b17b984-6cc7-4091-a50e-7a24af49bd32",
 				"type": "text/javascript",
 				"exec": [
 					""
-				]
+				],
+				"id": "d3c486bd-fc0c-41b5-9c45-c0cfd6a35902"
 			}
 		}
 	],
 	"variable": [
 		{
-			"id": "ab1c9cbd-51d1-41d4-a3a9-28f5f5fb7b14",
+			"id": "0bf339da-9d63-4bf4-9eaa-316b3b6cbb39",
 			"key": "baseURL",
 			"value": "https://sqlverifier-50d286d70656.herokuapp.com",
 			"type": "string"
 		},
 		{
-			"id": "bfcbeda9-efdd-48d3-b60f-176b28dc943c",
+			"id": "87574c76-9d0a-45bc-82b1-5f40c4aa7c70",
 			"key": "studentUserName",
 			"value": "panel",
 			"type": "string"
 		},
 		{
-			"id": "3e6e3fe1-2d71-46d4-86f4-64663ddb47d3",
+			"id": "b1b7f339-1abb-4938-abcb-dc26fc775f6d",
 			"key": "studentPassword",
 			"value": "123456",
 			"type": "string"
 		},
 		{
-			"id": "0af2a409-c69e-4864-9d98-7e20cf1ae3c6",
+			"id": "926c491b-a13a-45b3-9960-3a263ad60e81",
 			"key": "teacherUserName",
 			"value": "card",
 			"type": "string"
 		},
 		{
-			"id": "bae16cda-9c71-406f-8827-7eaf6d96b867",
+			"id": "f55b0d7a-62f3-4b9a-8d94-2e3a8b76cc40",
 			"key": "teacherPassword",
 			"value": "123456",
 			"type": "string"
 		},
 		{
-			"id": "6d03ad17-2e52-4e3d-b4e1-c382c0e96a6b",
+			"id": "98eff104-61f1-4a31-8f1f-d12f281da931",
 			"key": "adminUserName",
 			"value": "protocol",
 			"type": "string"
 		},
 		{
-			"id": "2bc27b04-9b6b-4de2-bbdd-842f7544c1ab",
+			"id": "8f4dfad2-e3c8-47ff-8372-1ad874e4d628",
 			"key": "adminPassword",
 			"value": "123456",
 			"type": "string"
 		},
 		{
-			"id": "0dddf5fe-5a62-4cf1-9366-d9cb07e25281",
+			"id": "55d5d147-6785-4e76-8130-25e5fb9a67d6",
 			"key": "nonActiveUserName",
 			"value": "driver",
 			"type": "string"
 		},
 		{
-			"id": "52d12782-4213-4c8b-8b91-f96c07d4f169",
+			"id": "138f82c3-f83a-442f-919e-de51b05de680",
 			"key": "nonActivePassword",
 			"value": "123456",
 			"type": "string"
 		},
 		{
-			"id": "d3cc9630-733e-4af9-8fbb-ccde0222dee3",
+			"id": "6e244299-a299-44d7-95df-2daccdc91d53",
 			"key": "admin",
 			"value": "admin",
 			"type": "string"

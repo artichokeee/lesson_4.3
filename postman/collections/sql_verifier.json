@@ -256,26 +256,30 @@
 							"response": []
 						},
 						{
-							"name": "Registration a new admin is prohibited",
+							"name": "Registration a new admin",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
+										"id": "ec862d4f-8ba4-40a1-843e-79efaebf77c5",
 										"exec": [
-											"pm.test(\"Status code is 400 Bad Request\", function () {",
-											"    pm.response.to.have.status(400);",
+											"pm.test(\"Status code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
 											"});",
 											"",
 											"pm.test(\"The response has a header server with value Cowboy\", function () {",
 											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
-											"});"
+											"});",
+											"",
+											"const admin = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.environment.set(\"newAdminLogin\", admin.login);"
 										],
-										"type": "text/javascript",
-										"id": "e7885610-8602-4cf5-b4eb-0d7ad8cdc7da"
+										"type": "text/javascript"
 									}
 								}
 							],
-							"id": "79358048-a88d-4882-a962-aee92b46851f",
+							"id": "1e6a4583-aea4-4f1d-bd53-7bbe45b16c53",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -284,7 +288,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"{2023-11-16T19:34:20.909Z}\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -299,6 +303,69 @@
 									"path": [
 										"api",
 										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check an authority of a new admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9ffe8a18-cc3d-4029-bea1-5187edb445bf",
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"The body has a ROLE_USER_ADMIN authority\", function () {",
+											"    pm.expect(pm.response.json().authorities).to.eql([\"ROLE_USER_ADMIN\"]);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ac2d41c2-6764-4ea0-b264-ce4eb4b1f7c2",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "ffce89cd-9f01-4de6-a802-d48e02d8fbb2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/admin/users/{{newAdminLogin}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{newAdminLogin}}"
 									]
 								}
 							},

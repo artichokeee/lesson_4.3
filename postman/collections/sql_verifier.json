@@ -10,6 +10,60 @@
 			"name": "Lesson 4.1",
 			"item": [
 				{
+					"name": "Get a token",
+					"item": [
+						{
+							"name": "Get an admin token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "855a8b33-b1fd-45b6-b3a6-68bb7fe0eb00",
+										"exec": [
+											"const response = pm.response.json()",
+											"",
+											"pm.environment.set(\"accessToken\", response.id_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "3be3ec1c-a542-4b8b-a3e5-ae06ca50b61b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"admin\",\n\"password\": \"admin\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/authenticate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "d91ea2d7-2568-481c-90ce-f74a79f088cc"
+				},
+				{
 					"name": "Registration",
 					"item": [
 						{
@@ -18,6 +72,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "06413c49-39df-454f-b233-0b1f565facc6",
 										"exec": [
 											"pm.test(\"Status code is 201 Created\", function () {",
 											"    pm.response.to.have.status(201);",
@@ -30,20 +85,21 @@
 											"const student = JSON.parse(pm.request.body.raw);",
 											"",
 											"pm.environment.set(\"newStudenLogin\", student.login);",
+											"",
+											"",
 											""
 										],
-										"type": "text/javascript",
-										"id": "06413c49-39df-454f-b233-0b1f565facc6"
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "965831e4-456b-465e-bb44-3efacf561f7d",
 										"exec": [
 											""
 										],
-										"type": "text/javascript",
-										"id": "965831e4-456b-465e-bb44-3efacf561f7d"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -56,7 +112,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomLoremWord}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -145,6 +201,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "ec862d4f-8ba4-40a1-843e-79efaebf77c5",
 										"exec": [
 											"pm.test(\"Status code is 201 Created\", function () {",
 											"    pm.response.to.have.status(201);",
@@ -158,8 +215,7 @@
 											"",
 											"pm.environment.set(\"newTeacherLogin\", teacher.login);"
 										],
-										"type": "text/javascript",
-										"id": "ec862d4f-8ba4-40a1-843e-79efaebf77c5"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -172,7 +228,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_TEACHER\"\n  ],\n  \"password\": \"123456\"\n}",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomLoremWord}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_TEACHER\"\n  ],\n  \"password\": \"123456\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -288,7 +344,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
+									"raw": "{\n  \"id\": 1,\n  \"login\": \"{{$randomLoremWord}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"createdBy\": \"{{admin}}\",\n  \"createdDate\": \"2023-11-16T19:34:20.909Z\",\n  \"lastModifiedBy\": \"{{admin}}\",\n  \"lastModifiedDate\": \"2023-11-16T19:34:20.909Z\",\n  \"authorities\": [\n    \"ROLE_USER_ADMIN\"\n  ],\n  \"password\": \"123456\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -523,6 +579,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "d2fe37f6-505a-458f-94bd-0386fb6f6cba",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -532,8 +589,7 @@
 											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
 											"});"
 										],
-										"type": "text/javascript",
-										"id": "d2fe37f6-505a-458f-94bd-0386fb6f6cba"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -572,6 +628,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "d389a3ea-b625-4487-ac94-14e09397d000",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -581,8 +638,7 @@
 											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
 											"});"
 										],
-										"type": "text/javascript",
-										"id": "d389a3ea-b625-4487-ac94-14e09397d000"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -621,6 +677,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "261ff6a5-42b6-40be-8448-b49af2073a97",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -630,8 +687,7 @@
 											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
 											"});"
 										],
-										"type": "text/javascript",
-										"id": "261ff6a5-42b6-40be-8448-b49af2073a97"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -768,6 +824,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "baf1af57-c6c8-4d35-82d4-6235ee58a113",
 										"exec": [
 											"pm.test(\"Status code is 201 Created\", function () {",
 											"    pm.response.to.have.status(201);",
@@ -782,18 +839,17 @@
 											"pm.environment.set(\"nonActiveUserName\", nonActiveUser.login);",
 											""
 										],
-										"type": "text/javascript",
-										"id": "baf1af57-c6c8-4d35-82d4-6235ee58a113"
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "b171a9f8-8fdb-49e6-951b-5aac69272eef",
 										"exec": [
 											""
 										],
-										"type": "text/javascript",
-										"id": "b171a9f8-8fdb-49e6-951b-5aac69272eef"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -880,7 +936,32 @@
 							"response": []
 						}
 					],
-					"id": "f0fcf32c-103f-417e-85e6-1faf09a568bb"
+					"id": "f0fcf32c-103f-417e-85e6-1faf09a568bb",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5404374e-dc13-461d-9675-ab9cb4a4f8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2e93403c-63ad-40af-81eb-e9bb4ffd55f3",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				}
 			],
 			"id": "05fc28c5-a1d1-4a62-90bb-a2fc48c15439"
